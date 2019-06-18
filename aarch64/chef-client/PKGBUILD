@@ -1,0 +1,28 @@
+# Based off of the existing AUR script, except the only aarch64 support for for RHEL, so twiddling with the RPM is needed.
+
+pkgname=chef-client
+pkgver=15.0.300
+pkgrel=1
+pkgdesc="The Chef Client installation package includes everything you need to start converging your machines."
+arch=('aarch64')
+url="https://downloads.chef.io/chef-client/"
+license=('Apache')
+depends=()
+conflicts=( chef chef-solo )
+source=("https://packages.chef.io/files/stable/chef/${pkgver}/el/7/chef-${pkgver}-1.el7.aarch64.rpm")
+sha256sums=('0cbc8aa9ed6e4bb6b82ab542792d7131527b89e2d70265447a945cc44dd2f25c')
+
+package() {
+  # link executables
+  binaries="chef-apply chef-shell knife chef-client chef-solo ohai"
+
+  mkdir -p $pkgdir/usr/bin
+  mkdir -p $pkgdir/opt/chef
+  cp -r $srcdir/opt/chef $pkgdir/opt/
+
+  for binary in $binaries; do
+    ln -s /opt/chef/bin/$binary $pkgdir/usr/bin/ || error_exit "Cannot link $binary to /usr/bin"
+  done
+  chown -Rh 0:0 $pkgdir
+  chmod 755 $pkgdir/opt
+}
