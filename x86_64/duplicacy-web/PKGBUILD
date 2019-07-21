@@ -1,0 +1,17 @@
+pkgname=duplicacy-web
+pkgver=1.0.0
+pkgrel=1
+pkgdesc="A new generation cloud backup tool based on lock-free deduplication"
+arch=('x86_64')
+url="https://duplicacy.com/"
+license=('custom')
+source=("duplicacy_web_linux_$pkgver::https://acrosync.com/duplicacy-web/duplicacy_web_linux_x64_$pkgver" "$pkgname.service")
+sha256sums=('ccf2136014a3b751e52fe503eaa47785794c6ea77d33718d83b0457907862b04' 'SKIP')
+
+package() {
+  # Package is distributed as a binary file that is ready to go as-is.
+  install -Dm755 "duplicacy_web_linux_$pkgver" "$pkgdir/usr/bin/$pkgname"
+  install -Dm755 "$pkgname.service" "$pkgdir/usr/lib/systemd/system/$pkgname.service"
+  # Duplicacy creates a ".duplicacy-web" directory, and we need somewhere to put it. Ideally this would be better handled.
+  install -dm755 "$pkgdir/opt/$pkgname"
+}

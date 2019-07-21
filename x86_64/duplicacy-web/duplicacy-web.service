@@ -1,0 +1,17 @@
+[Unit]
+Description=Duplicacy Backup WebUI
+Wants=network.target
+After=syslog.target network-online.target
+
+[Service]
+Type=simple
+# Duplicacy needs a folder to store it's metadata, credentials, etc and it won't directly take an argument for it, so this "fakes" is.
+Environment="HOME=/opt/duplicacy-web"
+User=root
+ExecStart=/usr/bin/duplicacy-web
+Restart=on-failure
+RestartSec=10
+KillMode=process
+ 
+[Install]
+WantedBy=multi-user.target
