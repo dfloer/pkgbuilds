@@ -1,0 +1,22 @@
+pkgname=srt-live-server
+pkgver=1.4.5
+pkgrel=1
+pkgdesc="SRT based live streaming server for low latency."
+arch=('x86_64')
+url="https://github.com/Edward-Wu/srt-live-server"
+license=('MIT')
+depends=('srt')
+source=("https://github.com/Edward-Wu/srt-live-server/archive/V$pkgver.tar.gz")
+sha256sums=('0e22dabdc2ece1b15ac571bc22e57b8f9b546ee771531256e839eefb48a411e1')
+backup=('etc/srt-live-server/sls-example.conf')
+build() {
+	cd $pkgname-$pkgver/
+	make
+}
+
+package() {
+	install -Dm755 $pkgname-$pkgver/bin/sls $pkgdir/usr/bin/sls
+	install -Dm755 $pkgname-$pkgver/bin/slc $pkgdir/usr/bin/slc
+	install -Dm755 $pkgname-$pkgver/sls.conf $pkgdir/etc/srt-live-server/sls-example.conf
+}
+
