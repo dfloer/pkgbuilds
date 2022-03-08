@@ -1,0 +1,27 @@
+# Maintainer: Dale Floer <dalefloer@gmail.com>
+pkgname=srtla-git
+pkgver=v1.r12.g28e631c
+pkgrel=1
+pkgdesc="SRT transport proxy with link aggregation for connection bonding."
+arch=('x86_64')
+url="https://github.com/BELABOX/srtla"
+license=('AGPL')
+depends=('srt')
+source=("git+https://github.com/BELABOX/srtla.git")
+sha256sums=('SKIP')
+provides=(srtla)
+pkgver() {
+	cd "$srcdir/srtla"
+    git describe --long --tags | sed 's/\([^-]*-g\)/r\1/;s/-/./g'
+}
+
+build() {
+	cd $srcdir/srtla
+	make
+}
+
+package() {
+	install -Dm755 $srcdir/srtla/srtla_rec $pkgdir/usr/bin/srtla_rec
+	install -Dm755 $srcdir/srtla/srtla_send $pkgdir/usr/bin/srtla_send
+}
+
