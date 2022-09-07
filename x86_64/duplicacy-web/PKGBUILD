@@ -1,12 +1,12 @@
 pkgname=duplicacy-web
-pkgver=1.5.0
-pkgrel=2
+pkgver=1.6.3
+pkgrel=1
 pkgdesc="A new generation cloud backup tool based on lock-free deduplication"
 arch=('x86_64')
 url="https://duplicacy.com/"
 license=('custom')
 source=("duplicacy_web_linux_$pkgver::https://acrosync.com/duplicacy-web/duplicacy_web_linux_x64_$pkgver" "$pkgname.service")
-sha256sums=('1a28c214493c69c1a7e65dfc985e95cacda246935ca5e2541e2014cc8e2a9678' '8bc07c5d189374c9308c62417311fe57570d652b1244b8971c41ac80406287bf')
+sha256sums=('7e20fefb806578792002199246596d86246a013a11892c68c9b7365d3b080661' '8bc07c5d189374c9308c62417311fe57570d652b1244b8971c41ac80406287bf')
 
 package() {
   # Package is distributed as a binary file that is ready to go as-is.
